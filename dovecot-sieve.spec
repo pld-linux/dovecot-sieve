@@ -6,6 +6,7 @@ License:	LGPL
 Group:		Daemons
 URL:		http://www.dovecot.org/
 Source0:	http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
+# Source0-md5:  508926fc9ff8e0f6e13506e237d4916b
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
