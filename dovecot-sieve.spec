@@ -1,18 +1,21 @@
-Summary: Sieve plugin for dovecot
-Name: dovecot-sieve
-Version: 1.0.2
-Release: 1%{?dist}
-License: LGPL
-Group: System Environment/Daemons
-URL: http://www.dovecot.org/
-Source0: http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: dovecot-devel
-BuildRequires: autoconf, automake, libtool
-BuildRequires: gcc-c++
-BuildRequires: pkgconfig
-BuildRequires: flex, bison
-Requires: dovecot
+Summary:	Sieve plugin for dovecot
+Name:		dovecot-sieve
+Version:	1.0.2
+Release:	2
+License:	LGPL
+Group:		Daemons
+URL:		http://www.dovecot.org/
+Source0:	http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool
+BuildRequires:	dovecot-devel
+BuildRequires:	flex
+BuildRequires:	bison
+BuildRequires:	gcc-c++
+BuildRequires:	pkgconfig
+Requires:	dovecot
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Sieve is a language that can be used to create filters for electronic
@@ -33,28 +36,26 @@ perl -pi -e's,have_dovecot_libs=no,have_dovecot_libs=yes,g' configure
 # and $(dovecotdir)/src with $(libdir)/dovecot for libraries
 for f in `find . -name Makefile`
 do
-    mv -f $f $f.orig
-    sed -e's/\-I\$(dovecot_incdir)\/src/\-I\$(dovecot_incdir)/g' \
-        -e's/\$(dovecotdir)\/src\(\/lib\/.*\.a\)/\$(libdir)\/dovecot\/plugins\1/g' \
-        < $f.orig > $f
+	mv -f $f $f.orig
+	sed -e's/\-I\$(dovecot_incdir)\/src/\-I\$(dovecot_incdir)/g' \
+		-e's/\$(dovecotdir)\/src\(\/lib\/.*\.a\)/\$(libdir)\/dovecot\/plugins\1/g' \
+		< $f.orig > $f
 done
-make
+%{__make}
 
 %install
-rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
-rm -f %{buildroot}/%{_libdir}/dovecot/plugins/lda/*.a
-mkdir %{buildroot}%{_libdir}/dovecot/plugins
-mv %{buildroot}%{_libdir}/dovecot/lda %{buildroot}%{_libdir}/dovecot/plugins/. 
+rm -rf $RPM_BUILD_ROOT
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
+rm -f $RPM_BUILD_ROOT/%{_libdir}/dovecot/plugins/lda/*.a
+mkdir $RPM_BUILD_ROOT%{_libdir}/dovecot/plugins
+mv $RPM_BUILD_ROOT%{_libdir}/dovecot/lda $RPM_BUILD_ROOT%{_libdir}/dovecot/plugins/.
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root)
-%{_libexecdir}/dovecot/sievec
-%{_libexecdir}/dovecot/sieved
-%{_libdir}/dovecot/plugins/lda/*.so
-%{_libdir}/dovecot/plugins/lda/*.la
-
-%changelog
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/dovecot/sievec
+%attr(755,root,root) %{_libexecdir}/dovecot/sieved
+%attr(755,root,root) %{_libdir}/dovecot/plugins/lda/*.so
+%attr(755,root,root) %{_libdir}/dovecot/plugins/lda/*.la
