@@ -1,12 +1,13 @@
 Summary:	Sieve plugin for dovecot
+Summary(pl.UTF-8):	Wtyczka Sieve dla dovecota
 Name:		dovecot-sieve
 Version:	1.0.2
 Release:	2
 License:	LGPL
 Group:		Daemons
-URL:		http://www.dovecot.org/
 Source0:	http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
 # Source0-md5:  508926fc9ff8e0f6e13506e237d4916b
+URL:		http://www.dovecot.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -25,15 +26,23 @@ IMAP server.
 
 This dovecot plugin is derived is from Cyrus IMAP v2.2.12.
 
+%description -l pl.UTF-8
+Sieve to język używany do tworzenia filtrów dla poczty elektronicznej.
+Zawdzięcza swoje powstanie projektowi CMU Cyrus, twórcom serwera
+pocztowego Cyrus IMAP.
+
+Ta wtyczka dovecota wywodzi się z serwera Cyrus IMAP w wersji 2.2.12.
+
 %prep
 %setup -q
 
 %build
 # crude hack ...
 perl -pi -e's,have_dovecot_libs=no,have_dovecot_libs=yes,g' configure
-%configure --with-dovecot=%{_includedir}/dovecot \
-  INSTALL_DATA="install -c -p -m644"
-# Replace -I$(dovecotdir)/src with -I$(dovecotdir)/src
+%configure \
+	INSTALL_DATA="install -c -p -m644" \
+	--with-dovecot=%{_includedir}/dovecot
+# Replace -I$(dovecot_incdir)/src with -I$(dovecot_incdir)
 # and $(dovecotdir)/src with $(libdir)/dovecot for libraries
 for f in `find . -name Makefile`
 do
@@ -46,10 +55,14 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
-rm -f $RPM_BUILD_ROOT/%{_libdir}/dovecot/plugins/lda/*.a
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+# ??? one of two following commands is bogus
+rm -f $RPM_BUILD_ROOT%{_libdir}/dovecot/plugins/lda/*.a
 mkdir $RPM_BUILD_ROOT%{_libdir}/dovecot/plugins
-mv $RPM_BUILD_ROOT%{_libdir}/dovecot/lda $RPM_BUILD_ROOT%{_libdir}/dovecot/plugins/.
+mv $RPM_BUILD_ROOT%{_libdir}/dovecot/lda $RPM_BUILD_ROOT%{_libdir}/dovecot/plugins
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -59,4 +72,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/dovecot/sievec
 %attr(755,root,root) %{_libexecdir}/dovecot/sieved
 %attr(755,root,root) %{_libdir}/dovecot/plugins/lda/*.so
-%attr(755,root,root) %{_libdir}/dovecot/plugins/lda/*.la
+# !needed?
+%{_libdir}/dovecot/plugins/lda/*.la
