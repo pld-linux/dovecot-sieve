@@ -2,7 +2,7 @@ Summary:	Sieve plugin for dovecot
 Summary(pl.UTF-8):	Wtyczka Sieve dla dovecota
 Name:		dovecot-sieve
 Version:	1.1.6
-Release:	6
+Release:	7
 License:	LGPL
 Group:		Daemons
 Source0:	http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
