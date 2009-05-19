@@ -8,9 +8,12 @@ Group:		Daemons
 Source0:	http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
 # Source0-md5:	7acf3d98974a515b868addbdb73054eb
 URL:		http://www.dovecot.org/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	dovecot-devel >= 1:1.1.1
 BuildRequires:	flex
+BuildRequires:	libtool
 %requires_eq_to	dovecot dovecot-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -32,6 +35,11 @@ Ta wtyczka dovecota wywodzi się z serwera Cyrus IMAP w wersji 2.2.12.
 %setup -q
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-static \
 	--with-dovecot=%{_libdir}/dovecot-devel
