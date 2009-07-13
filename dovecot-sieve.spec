@@ -1,17 +1,20 @@
+%define	dovecot_series	1.2
+%define	sieve_version	0.1.8
 Summary:	Sieve plugin for dovecot
 Summary(pl.UTF-8):	Wtyczka Sieve dla dovecota
 Name:		dovecot-sieve
-Version:	1.1.6
-Release:	8
+Version:	%{dovecot_series}_%{sieve_version}
+Release:	1
 License:	LGPL
 Group:		Daemons
-Source0:	http://dovecot.org/releases/sieve/%{name}-%{version}.tar.gz
-# Source0-md5:	7acf3d98974a515b868addbdb73054eb
+Source0:	http://www.rename-it.nl/dovecot/%{dovecot_series}/dovecot-%{dovecot_series}-sieve-%{sieve_version}.tar.gz
+# Source0-md5:	364ca99ec75d7c149ed2f2de15debf8a
+Patch0:		%{name}-build.patch
 URL:		http://www.dovecot.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	dovecot-devel >= 1:1.1.1
+BuildRequires:	dovecot-devel >= 1:1.2.1
 BuildRequires:	flex
 BuildRequires:	libtool
 %requires_eq_to	dovecot dovecot-devel
@@ -32,7 +35,8 @@ pocztowego Cyrus IMAP.
 Ta wtyczka dovecota wywodzi się z serwera Cyrus IMAP w wersji 2.2.12.
 
 %prep
-%setup -q
+%setup -q -n dovecot-%{dovecot_series}-sieve-%{sieve_version}
+%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -63,6 +67,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS 
-%attr(755,root,root) %{_libdir}/dovecot/sievec
-%attr(755,root,root) %{_libdir}/dovecot/sieved
-%attr(755,root,root) %{_libdir}/dovecot/plugins/lda/lib90_cmusieve_plugin.so
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/dovecot/plugins/lda/lib90_sieve_plugin.so
+%{_mandir}/man1/*.1.gz
