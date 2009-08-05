@@ -1,5 +1,5 @@
 %define	dovecot_series	1.2
-%define	sieve_version	0.1.8
+%define	sieve_version	0.1.10
 Summary:	Sieve plugin for dovecot
 Summary(pl.UTF-8):	Wtyczka Sieve dla dovecota
 Name:		dovecot-sieve
@@ -8,13 +8,12 @@ Release:	1
 License:	LGPL
 Group:		Daemons
 Source0:	http://www.rename-it.nl/dovecot/%{dovecot_series}/dovecot-%{dovecot_series}-sieve-%{sieve_version}.tar.gz
-# Source0-md5:	364ca99ec75d7c149ed2f2de15debf8a
-Patch0:		%{name}-build.patch
+# Source0-md5:	97cd15001ff097938a2713b7af2dbcd1
 URL:		http://www.dovecot.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	dovecot-devel >= 1:1.2.1
+BuildRequires:	dovecot-devel >= 1:1.2.2
 BuildRequires:	flex
 BuildRequires:	libtool
 %requires_eq_to	dovecot dovecot-devel
@@ -36,7 +35,6 @@ Ta wtyczka dovecota wywodzi się z serwera Cyrus IMAP w wersji 2.2.12.
 
 %prep
 %setup -q -n dovecot-%{dovecot_series}-sieve-%{sieve_version}
-%patch0 -p1
 
 %build
 %{__libtoolize}
