@@ -1,0 +1,38 @@
+--- dovecot-1.2-sieve-0.1.15/src/sieve-tools/Makefile.am.orig	2010-01-12 10:47:03.000000000 +0100
++++ dovecot-1.2-sieve-0.1.15/src/sieve-tools/Makefile.am	2010-01-28 22:56:14.000000000 +0100
+@@ -24,15 +24,11 @@
+ 	$(top_srcdir)/src/lib-sieve/libsieve.la \
+ 	$(top_srcdir)/src/lib-sieve-tool/libsieve-tool.la \
+ 	./debug/libsieve_ext_debug.la \
+-    $(dovecot_incdir)/src/lib-dict/libdict.a \
++	$(dovecotdir)/src/lib-dict/libdict.a \
+ 	$(STORAGE_LIBS) 
+ 
+-unused_objects = \
+-	$(dovecot_incdir)/src/lib-dict/dict.o
+-
+ ldadd = \
+ 	$(libs) \
+-	$(unused_objects) \
+  	$(LIBICONV) \
+ 	$(RAND_LIBS) \
+ 	$(MODULE_LIBS)
+--- dovecot-1.2-sieve-0.1.15/src/testsuite/Makefile.am.orig	2010-01-12 10:47:03.000000000 +0100
++++ dovecot-1.2-sieve-0.1.15/src/testsuite/Makefile.am	2010-01-28 23:35:00.000000000 +0100
+@@ -15,15 +15,11 @@
+ libs = \
+ 	$(top_srcdir)/src/lib-sieve/libsieve.la \
+ 	$(top_srcdir)/src/lib-sieve-tool/libsieve-tool.la \
+-	$(dovecot_incdir)/src/lib-dict/libdict.a \
++	$(dovecotdir)/src/lib-dict/libdict.a \
+ 	$(STORAGE_LIBS)
+ 
+-unused_objects = \
+-	$(dovecot_incdir)/src/lib-dict/dict.o
+-
+ ldadd = \
+ 	$(libs) \
+-	$(unused_objects) \
+  	$(LIBICONV) \
+ 	$(RAND_LIBS) \
+ 	$(MODULE_LIBS)
