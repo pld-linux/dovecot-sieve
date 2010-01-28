@@ -9,11 +9,12 @@ License:	LGPL
 Group:		Daemons
 Source0:	http://www.rename-it.nl/dovecot/%{dovecot_series}/dovecot-%{dovecot_series}-sieve-%{sieve_version}.tar.gz
 # Source0-md5:	2246fbbcf304d3ec1df0db2d091fe05a
+Patch0:		%{name}-libdict.patch
 URL:		http://www.dovecot.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	dovecot-devel >= 1:1.2.10
+BuildRequires:	dovecot-devel >= 1:1.2.10-2
 BuildRequires:	flex
 BuildRequires:	libtool
 %requires_eq_to	dovecot dovecot-devel
@@ -35,6 +36,7 @@ Ta wtyczka dovecota wywodzi się z serwera Cyrus IMAP w wersji 2.2.12.
 
 %prep
 %setup -q -n dovecot-%{dovecot_series}-sieve-%{sieve_version}
+%patch0 -p1
 
 %build
 %{__libtoolize}
