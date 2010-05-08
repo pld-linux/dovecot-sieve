@@ -1,14 +1,14 @@
 %define	dovecot_series	1.2
-%define	sieve_version	0.1.15
+%define	sieve_version	0.1.16
 Summary:	Sieve plugin for dovecot
 Summary(pl.UTF-8):	Wtyczka Sieve dla dovecota
 Name:		dovecot-sieve
 Version:	%{dovecot_series}_%{sieve_version}
-Release:	3
+Release:	1
 License:	LGPL
 Group:		Daemons
 Source0:	http://www.rename-it.nl/dovecot/%{dovecot_series}/dovecot-%{dovecot_series}-sieve-%{sieve_version}.tar.gz
-# Source0-md5:	2246fbbcf304d3ec1df0db2d091fe05a
+# Source0-md5:	ffb1a6ddc1b5b9b3fd28eb714345730f
 Patch0:		%{name}-libdict.patch
 URL:		http://www.dovecot.org/
 BuildRequires:	autoconf
