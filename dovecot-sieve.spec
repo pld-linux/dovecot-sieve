@@ -37,7 +37,7 @@ Ta wtyczka dovecota wywodzi się z serwera Cyrus IMAP w wersji 2.2.12.
 
 %prep
 %setup -q -n dovecot-%{dovecot_series}-sieve-%{sieve_version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 %{__libtoolize}
